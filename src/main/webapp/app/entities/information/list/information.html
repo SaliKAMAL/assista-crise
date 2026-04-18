@@ -1,0 +1,159 @@
+<div>
+  <h2 id="page-heading" data-cy="InformationHeading">
+    <span jhiTranslate="assistaCriseApp.information.home.title">Information</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span jhiTranslate="assistaCriseApp.information.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-information"
+        [routerLink]="['/information/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="assistaCriseApp.information.home.createLabel">Create a new Information</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  <jhi-filter [filters]="filters" />
+
+  @if (informations().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="assistaCriseApp.information.home.notFound">No Information found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="titre">
+              <div class="d-flex">
+                <span jhiTranslate="assistaCriseApp.information.titre">Titre</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="contenu">
+              <div class="d-flex">
+                <span jhiTranslate="assistaCriseApp.information.contenu">Contenu</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="datePublication">
+              <div class="d-flex">
+                <span jhiTranslate="assistaCriseApp.information.datePublication">Date Publication</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="latitude">
+              <div class="d-flex">
+                <span jhiTranslate="assistaCriseApp.information.latitude">Latitude</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="longitude">
+              <div class="d-flex">
+                <span jhiTranslate="assistaCriseApp.information.longitude">Longitude</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="auteur.login">
+              <div class="d-flex">
+                <span jhiTranslate="assistaCriseApp.information.auteur">Auteur</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="crise.titre">
+              <div class="d-flex">
+                <span jhiTranslate="assistaCriseApp.information.crise">Crise</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (information of informations(); track trackId(information)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/information', information.id, 'view']">{{ information.id }}</a>
+              </td>
+              <td>{{ information.titre }}</td>
+              <td>{{ information.contenu }}</td>
+              <td>{{ information.datePublication | formatMediumDatetime }}</td>
+              <td>{{ information.latitude }}</td>
+              <td>{{ information.longitude }}</td>
+              <td>
+                {{ information.auteur?.login }}
+              </td>
+              <td>
+                @if (information.crise) {
+                  <div>
+                    <a [routerLink]="['/crise', information.crise.id, 'view']">{{ information.crise.titre }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/information', information.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/information', information.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(information)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (informations().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

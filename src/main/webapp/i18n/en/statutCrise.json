@@ -1,0 +1,9 @@
+{
+  "assistaCriseApp": {
+    "StatutCrise": {
+      "null": "",
+      "ACTIVE": "ACTIVE",
+      "FERMEE": "FERMEE"
+    }
+  }
+}

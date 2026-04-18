@@ -1,0 +1,87 @@
+{
+  "annotations": {
+    "changelogDate": "20260418141658"
+  },
+  "applications": ["assistaCrise"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "titre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "200",
+      "fieldValidateRulesMinlength": "3"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "2000"
+    },
+    {
+      "fieldName": "statut",
+      "fieldType": "StatutDemande",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "OUVERTE,EN_COURS,RESOLUE,FERMEE"
+    },
+    {
+      "fieldName": "dateCreation",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateMiseAJour",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "latitude",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "90",
+      "fieldValidateRulesMin": "-90"
+    },
+    {
+      "fieldName": "longitude",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "180",
+      "fieldValidateRulesMin": "-180"
+    },
+    {
+      "fieldName": "archivee",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Demande",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "sinistre",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityField": "titre",
+      "otherEntityName": "crise",
+      "relationshipName": "crise",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "offre",
+      "otherEntityRelationshipName": "demande",
+      "relationshipName": "offre",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

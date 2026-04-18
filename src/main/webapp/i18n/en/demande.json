@@ -1,0 +1,34 @@
+{
+  "assistaCriseApp": {
+    "demande": {
+      "home": {
+        "title": "Demandes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Demande",
+        "createOrEditLabel": "Create or edit a Demande",
+        "notFound": "No Demandes found"
+      },
+      "created": "A new Demande is created with identifier {{ param }}",
+      "updated": "A Demande is updated with identifier {{ param }}",
+      "deleted": "A Demande is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Demande {{ id }}?"
+      },
+      "detail": {
+        "title": "Demande"
+      },
+      "id": "ID",
+      "titre": "Titre",
+      "description": "Description",
+      "statut": "Statut",
+      "dateCreation": "Date Creation",
+      "dateMiseAJour": "Date Mise A Jour",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "archivee": "Archivee",
+      "sinistre": "Sinistre",
+      "crise": "Crise",
+      "offre": "Offre"
+    }
+  }
+}

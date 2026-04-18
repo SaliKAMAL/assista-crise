@@ -1,0 +1,27 @@
+{
+  "assistaCriseApp": {
+    "messageChat": {
+      "home": {
+        "title": "Message Chats",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Message Chat",
+        "createOrEditLabel": "Create or edit a Message Chat",
+        "notFound": "No Message Chats found"
+      },
+      "created": "A new Message Chat is created with identifier {{ param }}",
+      "updated": "A Message Chat is updated with identifier {{ param }}",
+      "deleted": "A Message Chat is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Message Chat {{ id }}?"
+      },
+      "detail": {
+        "title": "Message Chat"
+      },
+      "id": "ID",
+      "contenu": "Contenu",
+      "dateEnvoi": "Date Envoi",
+      "auteur": "Auteur",
+      "demande": "Demande"
+    }
+  }
+}

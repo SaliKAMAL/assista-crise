@@ -1,0 +1,77 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (crise(); as criseRef) {
+      <div>
+        <h2 data-cy="criseDetailsHeading"><span jhiTranslate="assistaCriseApp.crise.detail.title">Crise</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ criseRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.crise.titre">Titre</span></dt>
+          <dd>
+            <span>{{ criseRef.titre }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.crise.description">Description</span></dt>
+          <dd>
+            <span>{{ criseRef.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.crise.type">Type</span></dt>
+          <dd>
+            <span [jhiTranslate]="'assistaCriseApp.TypeCrise.' + (criseRef.type ?? 'null')">{{
+              {
+                null: '',
+                FEU_FORET: 'FEU_FORET',
+                INONDATION: 'INONDATION',
+                GLISSEMENT_TERRAIN: 'GLISSEMENT_TERRAIN',
+                ACCIDENT_INDUSTRIEL: 'ACCIDENT_INDUSTRIEL',
+                AUTRE: 'AUTRE',
+              }[criseRef.type ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.crise.dateDebut">Date Debut</span></dt>
+          <dd>
+            <span>{{ criseRef.dateDebut | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.crise.dateFermeture">Date Fermeture</span></dt>
+          <dd>
+            <span>{{ criseRef.dateFermeture | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.crise.statut">Statut</span></dt>
+          <dd>
+            <span [jhiTranslate]="'assistaCriseApp.StatutCrise.' + (criseRef.statut ?? 'null')">{{
+              { null: '', ACTIVE: 'ACTIVE', FERMEE: 'FERMEE' }[criseRef.statut ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.crise.latitude">Latitude</span></dt>
+          <dd>
+            <span>{{ criseRef.latitude }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.crise.longitude">Longitude</span></dt>
+          <dd>
+            <span>{{ criseRef.longitude }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.crise.declarant">Declarant</span></dt>
+          <dd>
+            <span>{{ criseRef.declarant?.login }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/crise', criseRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

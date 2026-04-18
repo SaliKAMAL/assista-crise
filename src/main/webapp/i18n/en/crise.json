@@ -1,0 +1,32 @@
+{
+  "assistaCriseApp": {
+    "crise": {
+      "home": {
+        "title": "Crises",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Crise",
+        "createOrEditLabel": "Create or edit a Crise",
+        "notFound": "No Crises found"
+      },
+      "created": "A new Crise is created with identifier {{ param }}",
+      "updated": "A Crise is updated with identifier {{ param }}",
+      "deleted": "A Crise is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Crise {{ id }}?"
+      },
+      "detail": {
+        "title": "Crise"
+      },
+      "id": "ID",
+      "titre": "Titre",
+      "description": "Description",
+      "type": "Type",
+      "dateDebut": "Date Debut",
+      "dateFermeture": "Date Fermeture",
+      "statut": "Statut",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "declarant": "Declarant"
+    }
+  }
+}

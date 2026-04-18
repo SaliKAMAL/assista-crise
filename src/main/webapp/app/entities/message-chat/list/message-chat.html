@@ -1,0 +1,133 @@
+<div>
+  <h2 id="page-heading" data-cy="MessageChatHeading">
+    <span jhiTranslate="assistaCriseApp.messageChat.home.title">Message Chats</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span jhiTranslate="assistaCriseApp.messageChat.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-message-chat"
+        [routerLink]="['/message-chat/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="assistaCriseApp.messageChat.home.createLabel">Create a new Message Chat</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (messageChats().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="assistaCriseApp.messageChat.home.notFound">No Message Chats found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="contenu">
+              <div class="d-flex">
+                <span jhiTranslate="assistaCriseApp.messageChat.contenu">Contenu</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateEnvoi">
+              <div class="d-flex">
+                <span jhiTranslate="assistaCriseApp.messageChat.dateEnvoi">Date Envoi</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="auteur.login">
+              <div class="d-flex">
+                <span jhiTranslate="assistaCriseApp.messageChat.auteur">Auteur</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="demande.titre">
+              <div class="d-flex">
+                <span jhiTranslate="assistaCriseApp.messageChat.demande">Demande</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (messageChat of messageChats(); track trackId(messageChat)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/message-chat', messageChat.id, 'view']">{{ messageChat.id }}</a>
+              </td>
+              <td>{{ messageChat.contenu }}</td>
+              <td>{{ messageChat.dateEnvoi | formatMediumDatetime }}</td>
+              <td>
+                {{ messageChat.auteur?.login }}
+              </td>
+              <td>
+                @if (messageChat.demande) {
+                  <div>
+                    <a [routerLink]="['/demande', messageChat.demande.id, 'view']">{{ messageChat.demande.titre }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/message-chat', messageChat.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/message-chat', messageChat.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(messageChat)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (messageChats().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

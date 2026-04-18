@@ -1,0 +1,110 @@
+application {
+  config {
+    baseName AssistaCrise
+    applicationType monolith
+    packageName com.assistacrise
+    authenticationType jwt
+    prodDatabaseType postgresql
+    buildTool maven
+  }
+  entities *
+}
+
+enum TypeCrise {
+    FEU_FORET,
+    INONDATION,
+    GLISSEMENT_TERRAIN,
+    ACCIDENT_INDUSTRIEL,
+    AUTRE
+}
+
+enum StatutCrise {
+    ACTIVE,
+    FERMEE
+}
+
+enum StatutDemande {
+    OUVERTE,
+    EN_COURS,
+    RESOLUE,
+    FERMEE
+}
+
+enum RoleUtilisateur {
+    SINISTRE,
+    CITOYEN,
+    AUTORITE,
+    AGENT_SECOURS,
+    ADMINISTRATEUR
+}
+
+entity Crise {
+    titre String required minlength(3) maxlength(200),
+    description String maxlength(2000),
+    type TypeCrise required,
+    dateDebut Instant required,
+    dateFermeture Instant,
+    statut StatutCrise required,
+    latitude Double required min(-90) max(90),
+    longitude Double required min(-180) max(180)
+}
+
+entity Demande {
+    titre String required minlength(3) maxlength(200),
+    description String required maxlength(2000),
+    statut StatutDemande required,
+    dateCreation Instant required,
+    dateMiseAJour Instant,
+    latitude Double min(-90) max(90),
+    longitude Double min(-180) max(180),
+    archivee Boolean required
+}
+
+entity Offre {
+    titre String required minlength(3) maxlength(200),
+    description String required maxlength(2000),
+    dateCreation Instant required,
+    dateMiseAJour Instant,
+    latitude Double min(-90) max(90),
+    longitude Double min(-180) max(180),
+    archivee Boolean required,
+    active Boolean required
+}
+
+entity Information {
+    titre String required minlength(3) maxlength(200),
+    contenu String required maxlength(5000),
+    datePublication Instant required,
+    latitude Double min(-90) max(90),
+    longitude Double min(-180) max(180)
+}
+
+entity MessageChat {
+    contenu String required minlength(1) maxlength(1000),
+    dateEnvoi Instant required
+}
+
+// Relations
+
+relationship ManyToOne {
+    Crise{declarant(login) required} to User with builtInEntity,
+    Demande{sinistre(login) required} to User with builtInEntity,
+    Demande{crise(titre) required} to Crise,
+    Offre{citoyen(login) required} to User with builtInEntity,
+    Offre{crise(titre) required} to Crise,
+    Information{auteur(login) required} to User with builtInEntity,
+    Information{crise(titre) required} to Crise,
+    MessageChat{auteur(login) required} to User with builtInEntity,
+    MessageChat{demande(titre) required} to Demande
+}
+
+relationship ManyToMany {
+    Offre{demande(titre)} to Demande{offre}
+}
+
+// Options
+paginate Demande, Offre, Information, MessageChat with pagination
+paginate Crise with pagination
+filter Demande, Offre, Crise, Information
+dto * with mapstruct
+service * with serviceImpl

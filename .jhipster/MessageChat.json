@@ -1,0 +1,44 @@
+{
+  "annotations": {
+    "changelogDate": "20260418141958"
+  },
+  "applications": ["assistaCrise"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "contenu",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "1000",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "dateEnvoi",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "MessageChat",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "auteur",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityField": "titre",
+      "otherEntityName": "demande",
+      "relationshipName": "demande",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

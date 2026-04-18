@@ -1,0 +1,85 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (demande(); as demandeRef) {
+      <div>
+        <h2 data-cy="demandeDetailsHeading"><span jhiTranslate="assistaCriseApp.demande.detail.title">Demande</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ demandeRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.demande.titre">Titre</span></dt>
+          <dd>
+            <span>{{ demandeRef.titre }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.demande.description">Description</span></dt>
+          <dd>
+            <span>{{ demandeRef.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.demande.statut">Statut</span></dt>
+          <dd>
+            <span [jhiTranslate]="'assistaCriseApp.StatutDemande.' + (demandeRef.statut ?? 'null')">{{
+              { null: '', OUVERTE: 'OUVERTE', EN_COURS: 'EN_COURS', RESOLUE: 'RESOLUE', FERMEE: 'FERMEE' }[demandeRef.statut ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.demande.dateCreation">Date Creation</span></dt>
+          <dd>
+            <span>{{ demandeRef.dateCreation | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.demande.dateMiseAJour">Date Mise A Jour</span></dt>
+          <dd>
+            <span>{{ demandeRef.dateMiseAJour | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.demande.latitude">Latitude</span></dt>
+          <dd>
+            <span>{{ demandeRef.latitude }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.demande.longitude">Longitude</span></dt>
+          <dd>
+            <span>{{ demandeRef.longitude }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.demande.archivee">Archivee</span></dt>
+          <dd>
+            <span>{{ demandeRef.archivee }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.demande.sinistre">Sinistre</span></dt>
+          <dd>
+            <span>{{ demandeRef.sinistre?.login }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.demande.crise">Crise</span></dt>
+          <dd>
+            @if (demande()!.crise) {
+              <div>
+                <a [routerLink]="['/crise', demande()!.crise?.id, 'view']">{{ demandeRef.crise?.titre }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.demande.offre">Offre</span></dt>
+          <dd>
+            @for (offre of demandeRef.offres; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/offre', offre.id, 'view']">{{ offre?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/demande', demandeRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,73 @@
+{
+  "annotations": {
+    "changelogDate": "20260418141558"
+  },
+  "applications": ["assistaCrise"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "titre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "200",
+      "fieldValidateRulesMinlength": "3"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "2000"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "TypeCrise",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "FEU_FORET,INONDATION,GLISSEMENT_TERRAIN,ACCIDENT_INDUSTRIEL,AUTRE"
+    },
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateFermeture",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "statut",
+      "fieldType": "StatutCrise",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ACTIVE,FERMEE"
+    },
+    {
+      "fieldName": "latitude",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "90",
+      "fieldValidateRulesMin": "-90"
+    },
+    {
+      "fieldName": "longitude",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "180",
+      "fieldValidateRulesMin": "-180"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Crise",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "declarant",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

@@ -1,0 +1,83 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (offre(); as offreRef) {
+      <div>
+        <h2 data-cy="offreDetailsHeading"><span jhiTranslate="assistaCriseApp.offre.detail.title">Offre</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ offreRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.offre.titre">Titre</span></dt>
+          <dd>
+            <span>{{ offreRef.titre }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.offre.description">Description</span></dt>
+          <dd>
+            <span>{{ offreRef.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.offre.dateCreation">Date Creation</span></dt>
+          <dd>
+            <span>{{ offreRef.dateCreation | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.offre.dateMiseAJour">Date Mise A Jour</span></dt>
+          <dd>
+            <span>{{ offreRef.dateMiseAJour | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.offre.latitude">Latitude</span></dt>
+          <dd>
+            <span>{{ offreRef.latitude }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.offre.longitude">Longitude</span></dt>
+          <dd>
+            <span>{{ offreRef.longitude }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.offre.archivee">Archivee</span></dt>
+          <dd>
+            <span>{{ offreRef.archivee }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.offre.active">Active</span></dt>
+          <dd>
+            <span>{{ offreRef.active }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.offre.citoyen">Citoyen</span></dt>
+          <dd>
+            <span>{{ offreRef.citoyen?.login }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.offre.crise">Crise</span></dt>
+          <dd>
+            @if (offre()!.crise) {
+              <div>
+                <a [routerLink]="['/crise', offre()!.crise?.id, 'view']">{{ offreRef.crise?.titre }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.offre.demande">Demande</span></dt>
+          <dd>
+            @for (demande of offreRef.demandes; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/demande', demande.id, 'view']">{{ demande?.titre }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/offre', offreRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

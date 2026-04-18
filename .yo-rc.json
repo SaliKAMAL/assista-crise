@@ -1,0 +1,16 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "assistaCrise",
+    "buildTool": "maven",
+    "entities": ["Crise", "Demande", "Offre", "Information", "MessageChat"],
+    "jhipsterVersion": "9.0.0",
+    "jwtSecretKey": "ODg1ZDAzYzdjMDhlNzRjMzQ2OWZkYTM1ZjhhMDExNDgzZDhlOGI4ZWVkNTBhZDFiODMxNTdhYjU5ZTgxNzczZmRkMWFhNzM4MGMzZWRjZGE1NWQwYzc3MGFjNzRhZDVkYzYxNzE2N2ViZjlhMDcwNTNiNGU2ZDc4Y2M3ZmEzZTA=",
+    "languages": ["en"],
+    "lastLiquibaseTimestamp": 1776521998000,
+    "nativeLanguage": "en",
+    "packageName": "com.assistacrise",
+    "prodDatabaseType": "postgresql"
+  }
+}
